@@ -7,13 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class FlightDTO {
-    private Long id;
-    private String flightNumber;
+public class FlightAvailabilityDTO {
     private Boolean available;
     private Double price;
-    private Integer availableSeats;
-    private String airline;
-    private String origin;
-    private String destination;
 }

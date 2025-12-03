@@ -7,6 +7,9 @@ import com.example.UserService.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 
 @Service
 public class UserService {
@@ -22,6 +25,12 @@ public class UserService {
         User u = repo.findById(id)
                 .orElseThrow(() -> new UserNotFoundException("User with id " + id + " not found"));
         return new UserDTO(u.getId(), u.getName(), u.getEmail());
+    }
+    @Transactional(readOnly = true)
+    public List<UserDTO> getAllUsers() {
+        return repo.findAll().stream()
+                .map(u -> new UserDTO(u.getId(), u.getName(), u.getEmail()))
+                .collect(Collectors.toList());
     }
 
     @Transactional

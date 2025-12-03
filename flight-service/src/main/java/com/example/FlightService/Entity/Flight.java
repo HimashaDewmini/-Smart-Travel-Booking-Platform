@@ -17,6 +17,9 @@ public class Flight {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull(message = "Flight number required")
+    private String flightNumber;
+
     @NotNull(message = "Price required")
     @Min(value = 0, message = "Price must be non-negative")
     private Double price;
@@ -24,6 +27,9 @@ public class Flight {
     @NotNull(message = "availableSeats required")
     @Min(value = 0, message = "availableSeats must be >= 0")
     private Integer availableSeats;
+
+    @NotNull(message = "Availability required")
+    private Boolean available;
 
     // optional fields
     private String airline;

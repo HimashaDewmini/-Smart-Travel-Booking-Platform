@@ -6,6 +6,7 @@ import com.example.BookingService.Service.BookingService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -19,7 +20,7 @@ public class BookingController {
         this.service = service;
     }
 
-    // 1️⃣ Create booking
+    // Create booking
     @PostMapping
     public ResponseEntity<BookingResponse> createBooking(@RequestBody BookingRequest req) {
         BookingResponse resp = service.createBooking(req);
@@ -29,7 +30,7 @@ public class BookingController {
         return ResponseEntity.ok(resp);
     }
 
-    // 2️⃣ Update booking status (callback from Payment Service)
+    // Update booking status (callback from Payment Service)
     @PostMapping("/update-status")
     public ResponseEntity<String> updateStatus(@RequestBody Map<String, Object> payload) {
         Long bookingId = Long.valueOf(String.valueOf(payload.get("bookingId")));
@@ -38,8 +39,17 @@ public class BookingController {
         if ("NOT_FOUND".equals(res)) return ResponseEntity.notFound().build();
         return ResponseEntity.ok("OK");
     }
+    // Get all bookings
+    @GetMapping
+    public ResponseEntity<List<BookingResponse>> getAllBookings() {
+        List<BookingResponse> bookings = service.getAllBookings();
+        if (bookings.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(bookings);
+    }
 
-    // 3️⃣ Get booking by ID
+    // Get booking by ID
     @GetMapping("/{id}")
     public ResponseEntity<BookingResponse> getBookingById(@PathVariable Long id) {
         Optional<BookingResponse> resp = service.getBookingById(id);
