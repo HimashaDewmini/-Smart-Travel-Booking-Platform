@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 # Smart Travel Booking Platform
 
 A distributed **microservices-based travel booking system** developed using **Spring Boot 3+, Java 17, H2 database, WebClient, and Feign Client**.  
@@ -47,17 +47,7 @@ Smart-Travel-Booking-Platform/
 ├── notification-service/      (8086)
 
 ```
-
-=======
-               ┌──────────────────────────┐
-               │     PAYMENT SERVICE       │
-               │         (8085)            │
-               │       WebClient           │
-               └──────────────────────────┘
->>>>>>> c3567d410f316608230254f7076e0afb2aec2d4f
-
----
-
+               
 ## 📦 Microservices Summary
 
 ### 1️⃣ **User Service – Port 8081**
@@ -222,6 +212,8 @@ http://localhost:<port>/h2-console
 ## ▶️ How to Run the Platform
 
 Run each service in separate terminals or using IntelliJ Run Configurations:
+
+example-:
 
 ### 1️⃣ User Service (8081)
 ```bash
