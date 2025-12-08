@@ -10,7 +10,6 @@ This platform demonstrates **service orchestration**, **inter-service communicat
 
 The system contains **6 independent microservices**, each running on a dedicated port:
 
-<<<<<<< HEAD
 ## 🏛️ Booking Service Communication Flow (8084)
 
 ```text
@@ -160,11 +159,8 @@ Use the provided Postman collection:
 **`Smart Travel Booking Platform.postman_collection.json`**  
 Loaded with requests for all 6 services.
 
-<<<<<<< HEAD
-### Example: Create Booking
-=======
 ### Example: Create Booking  
->>>>>>> c3567d410f316608230254f7076e0afb2aec2d4f
+
 POST http://localhost:8084/bookings
 
 Content-Type: application/json
