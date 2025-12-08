@@ -1,4 +1,3 @@
-
 # Smart Travel Booking Platform
 
 A distributed **microservices-based travel booking system** developed using **Spring Boot 3+, Java 17, H2 database, WebClient, and Feign Client**.  
@@ -26,7 +25,6 @@ BOOKING SERVICE (8084)
 │  WebClient   │  │ Feign Client  │ │ Feign Client │ │  WebClient    │
 └─────────────┘  └──────────────┘ └──────────────┘ └───────────────┘
 
-
                 ┌──────────────────────────┐
                 │      PAYMENT SERVICE      │
                 │          (8085)           │
@@ -46,7 +44,7 @@ Smart-Travel-Booking-Platform/
 ├── notification-service/      (8086)
 
 ```
-               
+---
 ## 📦 Microservices Summary
 
 ### 1️⃣ **User Service – Port 8081**
@@ -154,9 +152,13 @@ Sends fake notifications (console output).
 ---
 
 ## 🧪 API Testing (Postman)
-
 ### Example: Create Booking  
 
+Use the provided Postman collection:  
+**`Smart Travel Booking Platform.postman_collection.json`**  
+Loaded with requests for all 6 services.
+
+### Example: Create Booking
 POST http://localhost:8084/bookings
 
 Content-Type: application/json
@@ -204,10 +206,8 @@ http://localhost:<port>/h2-console
 
 Run each service in separate terminals or using IntelliJ Run Configurations:
 
-example-:
-
 ### 1️⃣ User Service (8081)
 ```bash
 cd user-service
 mvn spring-boot:run
-
+```
