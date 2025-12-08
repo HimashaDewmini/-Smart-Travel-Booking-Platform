@@ -154,8 +154,6 @@ Sends fake notifications (console output).
 ---
 
 ## 🧪 API Testing (Postman)
-**`Smart Travel Booking Platform.postman_collection.json`**  
-Loaded with requests for all 6 services.
 
 ### Example: Create Booking  
 
