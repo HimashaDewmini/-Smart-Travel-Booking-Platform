@@ -193,7 +193,6 @@ Access H2 console:
 http://localhost:<port>/h2-console
 ```
 
-<<<<<<< HEAD
 ## 🛠 Technology Stack
 
 - **Java 17**
