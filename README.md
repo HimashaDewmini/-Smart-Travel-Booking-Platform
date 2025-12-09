@@ -244,3 +244,12 @@ mvn spring-boot:run
 cd notification-service
 mvn spring-boot:run
 ```
+## 📜 API Documentation (Swagger)
+| Service      | Swagger URL                       |
+|-------------|-----------------------------------|
+| User        | `http://localhost:8081/swagger-ui/index.html` |
+| Booking     | `http://localhost:8084/swagger-ui/index.html` |
+| Payment     | `http://localhost:8085/swagger-ui/index.html` |
+| Notification| `http://localhost:8086/swagger-ui/index.html` |
+| Flight      | `http://localhost:8082/swagger-ui/index.html` |
+| Hotel       | `http://localhost:8083/swagger-ui/index.html` |
