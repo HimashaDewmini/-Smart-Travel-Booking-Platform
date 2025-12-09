@@ -48,6 +48,14 @@ Smart-Travel-Booking-Platform/
 ├── notification-service/      (8086)
 
 ```
+## Each service includes:
+- **controller** 
+- **service** 
+- **repository** 
+- **dto** 
+- **entity** 
+- **config**  
+- **exception** 
 ---
 ## 📦 Microservices Summary
 
