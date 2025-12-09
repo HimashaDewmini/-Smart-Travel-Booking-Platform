@@ -1,7 +1,7 @@
 # 🌍 Smart Travel Booking Platform
 
-# ITS 4243 – Microservices and Cloud Computing | Assignment 02
-# University of Sri Jayewardenepura – Faculty of Technology – Department of ICT
+### ITS 4243 – Microservices and Cloud Computing | Assignment 02
+### University of Sri Jayewardenepura – Faculty of Technology – Department of ICT
 
 # 📌 1. Project Introduction
 
@@ -156,11 +156,6 @@ Sends fake notifications (console output).
 ---
 
 ## 🧪 API Testing (Postman)
-### Example: Create Booking  
-
-Use the provided Postman collection:  
-**`Smart Travel Booking Platform.postman_collection.json`**  
-Loaded with requests for all 6 services.
 
 ### Example: Create Booking
 POST http://localhost:8084/bookings
