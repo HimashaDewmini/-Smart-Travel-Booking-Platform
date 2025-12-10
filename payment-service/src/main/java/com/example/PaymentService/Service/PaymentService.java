@@ -7,7 +7,6 @@ import com.example.PaymentService.Repository.PaymentRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
-import org.springframework.web.reactive.function.client.WebClientResponseException;
 
 import java.time.LocalDateTime;
 import java.util.Map;
@@ -18,7 +17,7 @@ public class PaymentService {
     private final PaymentRepository repo;
     private final WebClient webClient;
 
-    @Value("${booking.service.url}") // Example: http://localhost:8084/bookings/update-status
+    @Value("${booking.service.url}") // http://localhost:8084/bookings/update-status
     private String bookingCallbackUrl;
 
     public PaymentService(PaymentRepository repo, WebClient.Builder builder) {
@@ -28,44 +27,37 @@ public class PaymentService {
 
     public PaymentResponse processPayment(PaymentRequest req) {
 
-        // 1️⃣ Dummy business logic
-        String status = "SUCCESS";
-
-        // 2️⃣ Save payment to DB
+        // 1️⃣ Save payment
         Payment payment = new Payment(
                 null,
                 req.getBookingId(),
                 req.getAmount(),
-                status,
+                "SUCCESS",
                 LocalDateTime.now()
         );
         repo.save(payment);
 
-        // 3️⃣ Notify Booking Service
+        // 2️⃣ Update Booking status to CONFIRMED
         try {
-            webClient.put() // Use PUT to match Booking Service
+            webClient.post() // Must be POST to match controller
                     .uri(bookingCallbackUrl)
                     .bodyValue(Map.of(
                             "bookingId", req.getBookingId(),
-                            "status", "PAID"
+                            "status", "CONFIRMED"
                     ))
                     .retrieve()
                     .bodyToMono(Void.class)
-                    .block();
-
-            System.out.println("Booking Service notified successfully");
-        } catch (WebClientResponseException e) {
-            System.err.println("Booking Service responded with error: " + e.getStatusCode() + " - " + e.getResponseBodyAsString());
+                    .block(); // block to ensure BookingService receives it
+            System.out.println("Booking status updated to CONFIRMED successfully");
         } catch (Exception e) {
-            System.err.println("Error notifying Booking Service:");
+            System.err.println("Error updating booking status:");
             e.printStackTrace();
         }
 
-        // 4️⃣ Return response
         return new PaymentResponse(
                 req.getBookingId(),
-                status,
-                "Payment processed successfully"
+                "SUCCESS",
+                "Payment processed and booking confirmed"
         );
     }
 }

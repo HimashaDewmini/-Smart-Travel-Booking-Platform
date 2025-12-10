@@ -45,4 +45,26 @@ public class UserController {
         User saved = service.createUser(user);
         return ResponseEntity.ok(saved);
     }
+
+    @Operation(summary = "Update user", description = "Update user details by ID")
+    @PutMapping("/{id}")
+    public ResponseEntity<UserDTO> updateUser(
+            @Parameter(description = "ID of the user to update", example = "1")
+            @PathVariable Long id,
+            @Valid @RequestBody UserDTO userDTO) {
+
+        UserDTO updatedUser = service.updateUser(id, userDTO);
+        return ResponseEntity.ok(updatedUser);
+    }
+
+    @Operation(summary = "Delete user", description = "Delete a user by ID")
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteUser(
+            @Parameter(description = "ID of the user to delete", example = "1")
+            @PathVariable Long id) {
+
+        service.deleteUser(id);
+        return ResponseEntity.ok("User deleted successfully");
+    }
+
 }

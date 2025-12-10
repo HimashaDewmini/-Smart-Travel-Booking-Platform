@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
 @Service
 public class UserService {
 
@@ -26,6 +25,7 @@ public class UserService {
                 .orElseThrow(() -> new UserNotFoundException("User with id " + id + " not found"));
         return new UserDTO(u.getId(), u.getName(), u.getEmail());
     }
+
     @Transactional(readOnly = true)
     public List<UserDTO> getAllUsers() {
         return repo.findAll().stream()
@@ -35,10 +35,30 @@ public class UserService {
 
     @Transactional
     public User createUser(User user) {
-        // optional: check duplicate email
         repo.findByEmail(user.getEmail()).ifPresent(existing -> {
             throw new RuntimeException("Email already in use: " + user.getEmail());
         });
         return repo.save(user);
+    }
+
+    @Transactional
+    public UserDTO updateUser(Long id, UserDTO dto) {
+        User existing = repo.findById(id)
+                .orElseThrow(() -> new UserNotFoundException("User with ID " + id + " not found"));
+
+        existing.setName(dto.getName());
+        existing.setEmail(dto.getEmail());
+
+        User updated = repo.save(existing);
+
+        return new UserDTO(updated.getId(), updated.getName(), updated.getEmail());
+    }
+
+    @Transactional
+    public void deleteUser(Long id) {
+        User user = repo.findById(id)
+                .orElseThrow(() -> new UserNotFoundException("User with ID " + id + " not found"));
+
+        repo.delete(user);
     }
 }

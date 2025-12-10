@@ -21,7 +21,8 @@ public class FlightService {
 
     @Transactional(readOnly = true)
     public FlightDTO getFlightById(Long id) {
-        Flight f = repo.findById(id).orElseThrow(() -> new FlightNotFoundException("Flight with id " + id + " not found"));
+        Flight f = repo.findById(id)
+                .orElseThrow(() -> new FlightNotFoundException("Flight with id " + id + " not found"));
         return toDTO(f);
     }
 
@@ -40,6 +41,36 @@ public class FlightService {
     @Transactional
     public Flight createFlight(Flight flight) {
         return repo.save(flight);
+    }
+
+    // -------------------------
+    // UPDATE FLIGHT
+    // -------------------------
+    @Transactional
+    public FlightDTO updateFlight(Long id, FlightDTO dto) {
+        Flight existing = repo.findById(id)
+                .orElseThrow(() -> new FlightNotFoundException("Flight with id " + id + " not found"));
+
+        existing.setFlightNumber(dto.getFlightNumber());
+        existing.setAvailable(dto.getAvailable());
+        existing.setPrice(dto.getPrice());
+        existing.setAvailableSeats(dto.getAvailableSeats());
+        existing.setAirline(dto.getAirline());
+        existing.setOrigin(dto.getOrigin());
+        existing.setDestination(dto.getDestination());
+
+        Flight updated = repo.save(existing);
+        return toDTO(updated);
+    }
+
+    // -------------------------
+    // DELETE FLIGHT
+    // -------------------------
+    @Transactional
+    public void deleteFlight(Long id) {
+        Flight flight = repo.findById(id)
+                .orElseThrow(() -> new FlightNotFoundException("Flight with id " + id + " not found"));
+        repo.delete(flight);
     }
 
     private FlightDTO toDTO(Flight f) {

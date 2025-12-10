@@ -39,6 +39,7 @@ public class BookingController {
         if ("NOT_FOUND".equals(res)) return ResponseEntity.notFound().build();
         return ResponseEntity.ok("OK");
     }
+
     // Get all bookings
     @GetMapping
     public ResponseEntity<List<BookingResponse>> getAllBookings() {

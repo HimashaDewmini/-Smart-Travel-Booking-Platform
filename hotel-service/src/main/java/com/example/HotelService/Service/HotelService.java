@@ -24,19 +24,13 @@ public class HotelService {
         Hotel h = repo.findById(id)
                 .orElseThrow(() -> new HotelNotFoundException("Hotel with id " + id + " not found"));
 
-        return new HotelDTO(
-                h.getId(),
-                h.getPrice(),
-                h.getAvailableRooms(),
-                h.getHotelName(),
-                h.getLocation()
-        );
+        return toDTO(h);
     }
 
     @Transactional(readOnly = true)
     public List<HotelDTO> getAllHotels() {
         return repo.findAll().stream()
-                .map(h -> new HotelDTO(h.getId(), h.getPrice(), h.getAvailableRooms(), h.getHotelName(), h.getLocation()))
+                .map(this::toDTO)
                 .toList();
     }
 
@@ -50,5 +44,43 @@ public class HotelService {
     @Transactional
     public Hotel createHotel(Hotel hotel) {
         return repo.save(hotel);
+    }
+
+    // -------------------------
+    // UPDATE HOTEL
+    // -------------------------
+    @Transactional
+    public HotelDTO updateHotel(Long id, HotelDTO dto) {
+        Hotel existing = repo.findById(id)
+                .orElseThrow(() -> new HotelNotFoundException("Hotel with id " + id + " not found"));
+
+        existing.setHotelName(dto.getHotelName());
+        existing.setPrice(dto.getPrice());
+        existing.setAvailableRooms(dto.getAvailableRooms());
+        existing.setLocation(dto.getLocation());
+
+        Hotel updated = repo.save(existing);
+        return toDTO(updated);
+    }
+
+    // -------------------------
+    // DELETE HOTEL
+    // -------------------------
+    @Transactional
+    public void deleteHotel(Long id) {
+        Hotel hotel = repo.findById(id)
+                .orElseThrow(() -> new HotelNotFoundException("Hotel with id " + id + " not found"));
+        repo.delete(hotel);
+    }
+
+    // Helper method to convert Entity to DTO
+    private HotelDTO toDTO(Hotel h) {
+        return new HotelDTO(
+                h.getId(),
+                h.getPrice(),
+                h.getAvailableRooms(),
+                h.getHotelName(),
+                h.getLocation()
+        );
     }
 }
