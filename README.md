@@ -12,44 +12,47 @@ This platform demonstrates **service orchestration**, **inter-service communicat
 
 ## 🏗 Architecture Overview
 
-The system contains **6 independent microservices**, each running on a dedicated port:
-Booking Service (8084) is the orchestrator.
+The system contains 6 independent microservices, each running on a dedicated port. Booking Service (8084) acts as the orchestrator.
 
-User Service (8081) → via WebClient.
+User Service (8081) → communicates with Booking Service via WebClient.
 
-Flight Service (8082) → via Feign Client.
+Flight Service (8082) → communicates with Booking Service via Feign Client.
 
-Hotel Service (8083) → via Feign Client.
+Hotel Service (8083) → communicates with Booking Service via Feign Client.
 
-Notification Service (8086) → via WebClient to send booking confirmations.
+Booking Service (8084) → orchestrates flight, hotel, payment, and notification services.
 
-Payment Service (8085) → calls Booking Service (8084) via WebClient to update booking status after payment.
+Payment Service (8085) → calls Booking Service via WebClient to update booking status after payment.
+
+Notification Service (8086) → uses WebClient to send booking confirmations and log them in the database.
 
 ```text
-                     +------------------+
-                     |  User Service    |
-                     |    (8081)        |
-                     +------------------+
-                            ^
-                            | WebClient
-                            |
-+------------------+    +------------------+    +------------------+
-| Payment Service  |--->| Booking Service  |--->| Flight Service   |
-|     (8085)       |    |     (8084)       |    |     (8082)       |
-+------------------+    +------------------+    +------------------+
-                            | Feign
-                            v
-                     +------------------+
-                     |  Hotel Service   |
-                     |     (8083)       |
-                     +------------------+
-                            |
-                            | WebClient
-                            v
-                     +------------------+
-                     | Notification     |
-                     | Service (8086)   |
-                     +------------------+
+
+
+                            ┌──────────────────┐
+                       │   User Service   │
+                       │     (8081)       │
+                       └─────────▲────────┘
+                                 │ WebClient
+                                 │
+       ┌───────────────┐  Feign │             Feign   ┌──────────────────┐
+       │ Flight Service │◄────────┤  Booking Service   ├────────►│ Hotel Service │
+       │     (8082)    │         │  (8084) Orchestrator│        │    (8083)    │
+       └───────────────┘         │                    │        └──────────────────┘
+                                 │
+                                 │ WebClient
+                                 ▼
+                        ┌──────────────────┐
+                        │ Payment Service  │
+                        │     (8085)       │
+                        └─────────▲────────┘
+                                  │ WebClient
+                                  ▼
+                     ┌──────────────────────────┐
+                     │ Notification Service      │
+                     │     (8086)               │
+                     │ 
+                     └──────────────────────────┘
 
 ```
 ## 📁 Project Structure – Smart Travel Booking Platform
