@@ -1,4 +1,9 @@
-# Smart Travel Booking Platform
+# 🌍 Smart Travel Booking Platform
+
+### ITS 4243 – Microservices and Cloud Computing | Assignment 02
+### University of Sri Jayewardenepura – Faculty of Technology – Department of ICT
+
+# 📌 1. Project Introduction
 
 A distributed **microservices-based travel booking system** developed using **Spring Boot 3+, Java 17, H2 database, WebClient, and Feign Client**.  
 This platform demonstrates **service orchestration**, **inter-service communication**, **REST APIs**, **payment callbacks**, and **clean separation of microservices**, meeting the assignment requirements.
@@ -9,7 +14,6 @@ This platform demonstrates **service orchestration**, **inter-service communicat
 
 The system contains **6 independent microservices**, each running on a dedicated port:
 
-## 🏛️ Booking Service Communication Flow (8084)
 
 ```text
 BOOKING SERVICE (8084)
@@ -44,6 +48,14 @@ Smart-Travel-Booking-Platform/
 ├── notification-service/      (8086)
 
 ```
+## Each service includes:
+- **controller** 
+- **service** 
+- **repository** 
+- **dto** 
+- **entity** 
+- **config**  
+- **exception** 
 ---
 ## 📦 Microservices Summary
 
@@ -152,11 +164,6 @@ Sends fake notifications (console output).
 ---
 
 ## 🧪 API Testing (Postman)
-### Example: Create Booking  
-
-Use the provided Postman collection:  
-**`Smart Travel Booking Platform.postman_collection.json`**  
-Loaded with requests for all 6 services.
 
 ### Example: Create Booking
 POST http://localhost:8084/bookings
@@ -177,14 +184,14 @@ Body:
 
 Each service uses its own H2 in-memory database, loaded at startup.
 
-| Service      | DB Name   |
-| ------------ | --------- |
-| User         | userdb    |
-| Flight       | flightdb  |
-| Hotel        | hoteldb   |
-| Booking      | bookingdb |
-| Payment      | paymentdb |
-| Notification | (No DB)   |
+| Service      | DB Name         |
+| ------------ | ---------       |
+| User         | userdb          |
+| Flight       | flightdb        |
+| Hotel        | hoteldb         |
+| Booking      | bookingdb       |
+| Payment      | paymentdb       |
+| Notification | notificationdb  |
 
 Access H2 console:
 ```
@@ -206,8 +213,43 @@ http://localhost:<port>/h2-console
 
 Run each service in separate terminals or using IntelliJ Run Configurations:
 
-### 1️⃣ User Service (8081)
+### User Service (8081)
 ```bash
 cd user-service
 mvn spring-boot:run
 ```
+### Flight Service (8082)
+```bash
+cd flight-service
+mvn spring-boot:run
+```
+### Hotel Service (8083)
+```bash
+cd hotel-service
+mvn spring-boot:run
+```
+
+### Booking Service (8084)
+```bash
+cd booking-service
+mvn spring-boot:run
+```
+### Payment Service (8085)
+```bash
+cd payment-service
+mvn spring-boot:run
+```
+###Notification Service (8086)
+```bash
+cd notification-service
+mvn spring-boot:run
+```
+## 📜 API Documentation (Swagger)
+| Service      | Swagger URL                       |
+|-------------|-----------------------------------|
+| User        | `http://localhost:8081/swagger-ui/index.html` |
+| Booking     | `http://localhost:8084/swagger-ui/index.html` |
+| Payment     | `http://localhost:8085/swagger-ui/index.html` |
+| Notification| `http://localhost:8086/swagger-ui/index.html` |
+| Flight      | `http://localhost:8082/swagger-ui/index.html` |
+| Hotel       | `http://localhost:8083/swagger-ui/index.html` |
