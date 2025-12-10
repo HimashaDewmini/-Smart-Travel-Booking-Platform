@@ -13,7 +13,17 @@ This platform demonstrates **service orchestration**, **inter-service communicat
 ## 🏗 Architecture Overview
 
 The system contains **6 independent microservices**, each running on a dedicated port:
+Booking Service (8084) is the orchestrator.
 
+User Service (8081) → via WebClient.
+
+Flight Service (8082) → via Feign Client.
+
+Hotel Service (8083) → via Feign Client.
+
+Notification Service (8086) → via WebClient to send booking confirmations.
+
+Payment Service (8085) → calls Booking Service (8084) via WebClient to update booking status after payment.
 
 ```text
 BOOKING SERVICE (8084)
