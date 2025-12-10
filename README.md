@@ -14,31 +14,26 @@ This platform demonstrates **service orchestration**, **inter-service communicat
 
 The system contains 6 independent microservices, each running on a dedicated port. Booking Service (8084) acts as the orchestrator.
 
-User Service (8081) → communicates with Booking Service via WebClient.
-
-Flight Service (8082) → communicates with Booking Service via Feign Client.
-
-Hotel Service (8083) → communicates with Booking Service via Feign Client.
-
-Booking Service (8084) → orchestrates flight, hotel, payment, and notification services.
-
-Payment Service (8085) → calls Booking Service via WebClient to update booking status after payment.
-
-Notification Service (8086) → uses WebClient to send booking confirmations and log them in the database.
+- **User Service (8081)** → communicates with Booking Service via **WebClient**.  
+- **Flight Service (8082)** → communicates with Booking Service via **Feign Client**.  
+- **Hotel Service (8083)** → communicates with Booking Service via **Feign Client**.  
+- **Booking Service (8084)** → orchestrates flight, hotel, payment, and notification services.  
+- **Payment Service (8085)** → calls Booking Service via **WebClient** to update booking status after payment.  
+- **Notification Service (8086)** → uses **WebClient** to send booking confirmations.
 
 ```text
 
 
-                            ┌──────────────────┐
+                       ┌──────────────────┐
                        │   User Service   │
                        │     (8081)       │
                        └─────────▲────────┘
                                  │ WebClient
                                  │
-       ┌───────────────┐  Feign │             Feign   ┌──────────────────┐
-       │ Flight Service │◄────────┤  Booking Service   ├────────►│ Hotel Service │
-       │     (8082)    │         │  (8084) Orchestrator│        │    (8083)    │
-       └───────────────┘         │                    │        └──────────────────┘
+       ┌───────────────┐  Feign │             Feign              ┌──────────────────┐
+       │ Flight Service│◄────────┤  Booking Service    ├────────►│ Hotel Service    │
+       │     (8082)    │         │  (8084) Orchestrator│         │    (8083)        │
+       └───────────────┘         │                     │         └──────────────────┘
                                  │
                                  │ WebClient
                                  ▼
@@ -49,7 +44,7 @@ Notification Service (8086) → uses WebClient to send booking confirmations and
                                   │ WebClient
                                   ▼
                      ┌──────────────────────────┐
-                     │ Notification Service      │
+                     │ Notification Service     │
                      │     (8086)               │
                      │ 
                      └──────────────────────────┘
@@ -86,6 +81,8 @@ Manages user information.
 - `POST /users`
 - `GET /users/{id}`
 - `GET /users`
+- `Put/users/{id}`
+- `Delete/users/{id}`
 
 Used by Booking Service → **WebClient**
 
@@ -98,6 +95,8 @@ Manages flights and availability.
 - `POST /flights`
 - `GET /flights/{id}`
 - `GET /flights/{id}/availability`
+- `Put/flights/{id}`
+- `Delete/flights/{id}`
 
 Used by Booking Service → **Feign Client**
 
@@ -110,6 +109,8 @@ Manages hotel info and room availability.
 - `POST /hotels`
 - `GET /hotels/{id}`
 - `GET /hotels/{id}/availability`
+- `Put/hotels/{id}`
+- `Delete/hotels/{id}`
 
 Used by Booking Service → **Feign Client**
 
